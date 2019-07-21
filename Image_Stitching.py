@@ -8,7 +8,6 @@ class Image_Stitching():
         self.min_match=10
         # Initiate SIFT detector
         self.sift=cv2.xfeatures2d.SIFT_create()
-        self.orb = cv2.ORB_create()
         self.smoothing_window_size=100
 
     def registration(self,img1,img2):
@@ -37,10 +36,12 @@ class Image_Stitching():
             image2_kp = np.float32(
                 [kp2[i].pt for (i, _) in good_points])
             # findHomography returns a mask which specifies the inlier and outlier points.
+			#RANSAC funtion to find out homography matrix
             H, status = cv2.findHomography(image2_kp, image1_kp, cv2.RANSAC,5.0)
         return H
 
     def create_mask(self,img1,img2,version):
+		#use weighted matrix to create mask for blending images
         height_img1 = img1.shape[0]
         width_img1 = img1.shape[1]
         width_img2 = img2.shape[1]
@@ -58,6 +59,7 @@ class Image_Stitching():
         return cv2.merge([mask, mask, mask])
 
     def blending(self,img1,img2):
+		#stitching two images funtion
         H = self.registration(img1,img2)
         height_img1 = img1.shape[0]
         width_img1 = img1.shape[1]

@@ -88,7 +88,7 @@ class Root(Tk):
             var.set("Sorry, please try again!!!")
 
     def fileDialog(self):
-        # global my_image
+        #browse image file funtion
 
         self.linkList = []
         self.filename = filedialog.askopenfilenames(initialdir = "/", title = "Select files", filetype = ( ("All Files", "*.*"),("JPEG", "*.jpeg"),("JPG", "*.jpg")))
@@ -116,6 +116,7 @@ class Root(Tk):
                 x1 = 20
                 y1 = y1 + hsize +20
     def saveFileDialog(self):
+		#save file funtion
         img = Image.open("panorama.jpg")
         f =  filedialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
         if f :  # asksaveasfile return `None` if dialog closed with "cancel".
